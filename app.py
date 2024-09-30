@@ -1,4 +1,6 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, flash
+from werkzeug.security import generate_password_hash
+from forms import RegisterForm
 from flask_login import LoginManager
 from models import db, User
 
@@ -20,6 +22,19 @@ def load_user(user_id):
 @app.route('/')
 def home():
     return "Welcome to Personal Finance Tracker!"
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        hashed_password = generate_password_hash(form.password.data, method='sha256')
+        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Registration successful! You can now log in.', 'success')
+        #return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
 
 with app.app_context():
     db.create_all()
