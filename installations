@@ -1,1 +1,2 @@
 pip3 install flask flask_sqlalchemy flask_login flask_wtf
+pip3 install email-validator
