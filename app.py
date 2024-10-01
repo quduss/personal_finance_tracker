@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash
 from forms import RegisterForm, LoginForm
-from flask_login import LoginManager, logout_user
+from flask_login import LoginManager, logout_user, login_user
 from models import db, User
 
 app = Flask(__name__)
@@ -39,8 +39,12 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        #return redirect(url_for('dashboard'))
-        pass
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and check_password_hash(user.password, form.password.data):
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid username or password. Please try again.', 'danger')
     return render_template('login.html', form=form)
 
 @app.route('/logout')
