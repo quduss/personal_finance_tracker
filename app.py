@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegisterForm, LoginForm
-from flask_login import LoginManager, logout_user, login_user
+from flask_login import LoginManager, logout_user, login_user, login_required, current_user
 from models import db, User
 
 app = Flask(__name__)
@@ -22,6 +22,11 @@ def load_user(user_id):
 @app.route('/')
 def home():
     return "Welcome to Personal Finance Tracker!"
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    return render_template('dashboard.html', user=current_user)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
