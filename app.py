@@ -1,4 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, flash
+from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegisterForm, LoginForm
 from flask_login import LoginManager, logout_user, login_user, login_required, current_user
