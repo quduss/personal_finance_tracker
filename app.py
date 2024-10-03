@@ -34,10 +34,15 @@ def register():
     if form.validate_on_submit():
         hashed_password = generate_password_hash(form.password.data, method='pbkdf2:sha256')
         new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Registration successful! You can now log in.', 'success')
-        return redirect(url_for('login'))
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Registration successful! You can now log in.', 'success')
+            return redirect(url_for('login'))
+
+        except IntegrityError:
+            db.session.rollback()
+            flash('Username or email already exists. Please choose a different one.', 'danger')
     return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
