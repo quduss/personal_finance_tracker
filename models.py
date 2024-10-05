@@ -16,14 +16,9 @@ class Transaction(db.Model):
     __tablename__ = 'transactions'
 
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.String(200), nullable=True)
     amount = db.Column(db.Float, nullable=False)
-    transaction_type = db.Column(db.String(50), nullable=False)
-    category = db.Column(db.String(100), nullable=True)
+    transaction_type = db.Column(db.String(10), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
     date = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
