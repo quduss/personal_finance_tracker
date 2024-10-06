@@ -6,8 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    {% extends "base.html" %}
-
     {% block content %}
         <h2>Add a Transaction</h2>
         <form method="POST" action="{{ url_for('add_transaction') }}">
