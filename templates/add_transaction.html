@@ -7,46 +7,46 @@
 </head>
 <body>
     {% block content %}
-        <h2>Add a Transaction</h2>
-        <form method="POST" action="{{ url_for('add_transaction') }}">
-            {{ form.hidden_tag() }}
-            
-            <div class="form-group">
-                {{ form.amount.label(class="form-control-label") }}
-                {{ form.amount(class="form-control") }}
-                {% if form.amount.errors %}
-                    <div class="text-danger">{{ form.amount.errors[0] }}</div>
-                {% endif %}
-            </div>
+    <h2>Add a Transaction</h2>
+    <form method="POST" action="{{ url_for('add_transaction') }}">
+        {{ form.hidden_tag() }}
 
-            <div class="form-group">
-                {{ form.description.label(class="form-control-label") }}
-                {{ form.description(class="form-control") }}
-                {% if form.description.errors %}
-                    <div class="text-danger">{{ form.description.errors[0] }}</div>
-                {% endif %}
-            </div>
+        <div>
+            {{ form.amount.label }} 
+            {{ form.amount }} 
+            {% if form.amount.errors %}
+                <div style="color: red;">{{ form.amount.errors[0] }}</div>
+            {% endif %}
+        </div>
 
-            <div class="form-group">
-                {{ form.transaction_type.label(class="form-control-label") }}
-                {{ form.transaction_type(class="form-check-inline") }}
-                {% if form.transaction_type.errors %}
-                    <div class="text-danger">{{ form.transaction_type.errors[0] }}</div>
-                {% endif %}
-            </div>
+        <div>
+            {{ form.description.label }} 
+            {{ form.description }} 
+            {% if form.description.errors %}
+                <div style="color: red;">{{ form.description.errors[0] }}</div>
+            {% endif %}
+        </div>
 
-            <div class="form-group">
-                {{ form.category.label(class="form-control-label") }}
-                {{ form.category(class="form-control") }}
-                {% if form.category.errors %}
-                    <div class="text-danger">{{ form.category.errors[0] }}</div>
-                {% endif %}
-            </div>
+        <div>
+            {{ form.transaction_type.label }} 
+            {{ form.transaction_type }} 
+            {% if form.transaction_type.errors %}
+                <div style="color: red;">{{ form.transaction_type.errors[0] }}</div>
+            {% endif %}
+        </div>
 
-            <div class="form-group">
-                {{ form.submit(class="btn btn-primary") }}
-            </div>
-        </form>
+        <div>
+            {{ form.category.label }} 
+            {{ form.category }} 
+            {% if form.category.errors %}
+                <div style="color: red;">{{ form.category.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <div>
+            {{ form.submit }}
+        </div>
+    </form>
     {% endblock %}
 
 </body>
