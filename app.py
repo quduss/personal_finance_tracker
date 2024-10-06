@@ -1,9 +1,9 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, TransactionForm
 from flask_login import LoginManager, logout_user, login_user, login_required, current_user
-from models import db, User
+from models import db, User, Transaction
 
 app = Flask(__name__)
 
@@ -63,6 +63,26 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'info')
     return redirect(url_for('login'))
+
+@app.route('/add_transaction', methods=['GET', 'POST'])
+@login_required
+def add_transaction():
+    form = TransactionForm()
+    if form.validate_on_submit():
+        new_transaction = Transaction(
+            amount=form.amount.data,
+            description=form.description.data,
+            transaction_type=form.transaction_type.data,
+            category=form.category.data,
+            user_id=current_user.id
+        )
+        db.session.add(new_transaction)
+        db.session.commit()
+        flash('Transaction added successfully!', 'success')
+        return redirect(url_for('dashboard'))
+
+    return render_template('add_transaction.html', form=form)
+    
 
 with app.app_context():
     db.create_all()
