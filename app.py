@@ -3,7 +3,8 @@ from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegisterForm, LoginForm, TransactionForm
 from flask_login import LoginManager, logout_user, login_user, login_required, current_user
-from models import db, User, Transaction
+from models import db
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
@@ -12,6 +13,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///finance.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
+migrate = Migrate(app, db)
+from models import User, Transaction
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
