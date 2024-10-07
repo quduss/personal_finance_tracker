@@ -41,7 +41,7 @@ def register():
         try:
             db.session.add(new_user)
             db.session.commit()
-            flash('Registration successful! You can now log in.', 'success')
+            flash('Registration successful!', 'success')
             return redirect(url_for('login'))
 
         except IntegrityError:
