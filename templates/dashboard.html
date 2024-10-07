@@ -18,6 +18,9 @@
         {% endif %}
     {% endwith %}
     <div>
+        <a href="{{ url_for('add_transaction') }}">Add a Transaction</a>
+    </div>
+    <div>
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 </body>
