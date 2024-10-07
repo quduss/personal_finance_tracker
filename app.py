@@ -85,7 +85,7 @@ def add_transaction():
         return redirect(url_for('dashboard'))
 
     return render_template('add_transaction.html', form=form)
-    
+
 
 with app.app_context():
     db.create_all()
