@@ -86,6 +86,13 @@ def add_transaction():
 
     return render_template('add_transaction.html', form=form)
 
+@app.route('/transactions')
+@login_required
+def transactions():
+    # Get all transactions for the current logged-in user
+    user_transactions = Transaction.query.filter_by(user_id=current_user.id).all()
+
+    return render_template('transactions.html', transactions=user_transactions)
 
 with app.app_context():
     db.create_all()
