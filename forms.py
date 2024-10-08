@@ -18,6 +18,6 @@ class LoginForm(FlaskForm):
 class TransactionForm(FlaskForm):
     amount = FloatField('Amount', validators=[DataRequired(), NumberRange(min=0.01, message="Amount must be greater than 0")])
     description = StringField('Description', validators=[DataRequired()])
-    transaction_type = RadioField('Transaction Type', choices=[(TransactionTypeEnum.INCOME.value, 'Income'), (TransactionTypeEnum.EXPENSE.value, 'Expense')], validators=[DataRequired()])
+    transaction_type = RadioField('Transaction Type', choices=[('Income', 'Income'), ('Expense', 'Expense')], validators=[DataRequired()])
     category = StringField('Category', validators=[DataRequired()])
     submit = SubmitField('Add Transaction')
