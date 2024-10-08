@@ -1,28 +1,41 @@
-<h2>Your Transaction History</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Your Transaction History</h2>
 
-{% if transactions %}
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Amount</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Category</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for transaction in transactions %}
+    {% if transactions %}
+        <table border="1">
+            <thead>
                 <tr>
-                    <td>{{ transaction.amount }}</td>
-                    <td>{{ transaction.description }}</td>
-                    <td>{{ transaction.transaction_type }}</td>
-                    <td>{{ transaction.category or 'N/A' }}</td>
-                    <td>{{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Date</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <p>No transactions found.</p>
-{% endif %}
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>{{ transaction.transaction_type }}</td>
+                        <td>{{ transaction.category or 'N/A' }}</td>
+                        <td>{{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No transactions found.</p>
+    {% endif %}
+    <div>
+        <a href="{{ url_for('dashboard') }}">Go back to dashboard</a>
+    </div>
+</body>
+</html>
