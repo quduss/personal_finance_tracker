@@ -26,7 +26,7 @@
                         <td>{{ transaction.description }}</td>
                         <td>{{ transaction.transaction_type }}</td>
                         <td>{{ transaction.category or 'N/A' }}</td>
-                        <td>{{ transaction.date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td><span class="transaction-date" data-utc="{{ transaction.date.isoformat() }}"></span></td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -37,5 +37,27 @@
     <div>
         <a href="{{ url_for('dashboard') }}">Go to dashboard</a>
     </div>
+    <script>
+        // JavaScript to convert UTC date to local time
+        document.addEventListener("DOMContentLoaded", function() {
+            var dateElements = document.querySelectorAll('.transaction-date');
+            
+            dateElements.forEach(function(el) {
+                var utcDateStr = el.getAttribute('data-utc');
+                var utcDate = new Date(utcDateStr);
+                
+                // Format the date as per local time zone
+                var options = {
+                year: 'numeric', 
+                month: 'numeric', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                hour12: true // Optional, if you want 12-hour format
+            };
+            el.textContent = utcDate.toLocaleString(undefined, options);
+            });
+        });
+    </script>
 </body>
 </html>
