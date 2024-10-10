@@ -94,6 +94,31 @@ def transactions():
 
     return render_template('transactions.html', transactions=user_transactions)
 
+@app.route('/edit_transaction/<int:transaction_id>', methods=['GET', 'POST'])
+@login_required
+def edit_transaction(transaction_id):
+    transaction = Transaction.query.get_or_404(transaction_id)
+
+    # Ensure the user can only edit their own transactions
+    if transaction.user_id != current_user.id:
+        flash('You are not authorized to edit this transaction', 'danger')
+        return redirect(url_for('transactions'))
+
+    form = TransactionForm(obj=transaction)
+
+    if form.validate_on_submit():
+        transaction.amount = form.amount.data
+        transaction.description = form.description.data
+        transaction.transaction_type = form.transaction_type.data
+        transaction.category = form.category.data  # if category is implemented
+        #transaction.date = form.date.data  # if allowing date editing
+
+        db.session.commit()
+        flash('Transaction updated successfully!', 'success')
+        return redirect(url_for('transactions'))
+
+    return render_template('edit_transaction.html', form=form, transaction=transaction)
+
 with app.app_context():
     db.create_all()
 
