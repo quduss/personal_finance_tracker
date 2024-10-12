@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FloatField, RadioField
-from wtforms.validators import InputRequired, Email, Length, EqualTo, DataRequired, NumberRange
+from wtforms import StringField, PasswordField, SubmitField, FloatField, RadioField, DateField, SelectField
+from wtforms.validators import InputRequired, Email, Length, EqualTo, DataRequired, NumberRange, Optional
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(), Length(min=4, max=20)])
@@ -20,3 +20,9 @@ class TransactionForm(FlaskForm):
     transaction_type = RadioField('Transaction Type', choices=[('Income', 'Income'), ('Expense', 'Expense')], validators=[DataRequired()])
     category = StringField('Category', validators=[DataRequired()])
     submit = SubmitField('Add Transaction')
+
+class FilterTransactionsForm(FlaskForm):
+    start_date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
+    end_date = DateField('End Date', format='%Y-%m-%d', validators=[Optional()])
+    category = SelectField('Category', choices=[], validators=[Optional()])
+    submit = SubmitField('Filter')
