@@ -6,6 +6,20 @@
     <title>Document</title>
 </head>
 <body>
+    <form method="POST" action="{{ url_for('transactions') }}">
+        {{ form.hidden_tag() }}
+    
+        <label for="start_date">Start Date</label>
+        {{ form.start_date() }}
+    
+        <label for="end_date">End Date</label>
+        {{ form.end_date() }}
+    
+        <label for="category">Category</label>
+        {{ form.category() }}
+    
+        <button type="submit">Filter</button>
+    </form>
     <h2>Your Transaction History</h2>
 
     {% if transactions %}
