@@ -119,6 +119,22 @@ def edit_transaction(transaction_id):
 
     return render_template('edit_transaction.html', form=form, transaction=transaction)
 
+@app.route('/delete_transaction/<int:transaction_id>', methods=['GET', 'POST'])
+@login_required
+def delete_transaction(transaction_id):
+    # Get the transaction by ID and ensure it belongs to the current user
+    transaction = Transaction.query.filter_by(id=transaction_id, user_id=current_user.id).first()
+    
+    if transaction:
+        db.session.delete(transaction)
+        db.session.commit()
+        flash('Transaction has been deleted successfully!', 'success')
+    else:
+        flash('Transaction not found or unauthorized action.', 'danger')
+    
+    return redirect(url_for('transactions'))
+
+
 with app.app_context():
     db.create_all()
 
