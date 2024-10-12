@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from forms import RegisterForm, LoginForm, TransactionForm
+from forms import RegisterForm, LoginForm, TransactionForm, FilterTransactionsForm
 from flask_login import LoginManager, logout_user, login_user, login_required, current_user
 from models import db
 from flask_migrate import Migrate
@@ -89,10 +89,25 @@ def add_transaction():
 @app.route('/transactions')
 @login_required
 def transactions():
-    # Get all transactions for the current logged-in user
-    user_transactions = Transaction.query.filter_by(user_id=current_user.id).all()
+    form = FilterTransactionsForm()
 
-    return render_template('transactions.html', transactions=user_transactions)
+    # Start with all transactions for the user
+    query = Transaction.query.filter_by(user_id=current_user.id)
+
+    if form.validate_on_submit():
+        # Apply date filter
+        if form.start_date.data:
+            query = query.filter(Transaction.date >= form.start_date.data)
+        if form.end_date.data:
+            query = query.filter(Transaction.date <= form.end_date.data)
+        
+        # Apply category filter (if category is not empty)
+        if form.category.data:
+            query = query.filter_by(category=form.category.data)
+
+    user_transactions = query.all()
+    
+    return render_template('transactions.html', form=form, transactions=user_transactions)
 
 @app.route('/edit_transaction/<int:transaction_id>', methods=['GET', 'POST'])
 @login_required
