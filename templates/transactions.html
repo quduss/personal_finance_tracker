@@ -8,19 +8,27 @@
 <body>
     <form method="POST" action="{{ url_for('transactions') }}">
         {{ form.hidden_tag() }}
-    
+
+        <div>
         <label for="start_date">Start Date</label>
         {{ form.start_date() }}
+        </div>
     
+        <div>
         <label for="end_date">End Date</label>
         {{ form.end_date() }}
-    
+        </div>
+
+        <div>
         <label for="category">Category</label>
         {{ form.category() }}
+        </div>
 
+        <div>
         <label for="transaction_type">Transaction Type</label>
         {{ form.transaction_type() }}
-    
+        </div>
+
         <button type="submit">Filter</button>
     </form>
     <h2>Your Transaction History</h2>
