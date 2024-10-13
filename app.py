@@ -105,6 +105,9 @@ def transactions():
         if form.category.data:
             query = query.filter_by(category=form.category.data)
 
+        if form.transaction_type.data:
+            query = query.filter_by(transaction_type=form.transaction_type.data)
+
     user_transactions = query.all()
     
     return render_template('transactions.html', form=form, transactions=user_transactions)
