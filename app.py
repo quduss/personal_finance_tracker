@@ -86,7 +86,7 @@ def add_transaction():
 
     return render_template('add_transaction.html', form=form)
 
-@app.route('/transactions')
+@app.route('/transactions', methods=['GET', 'POST'])
 @login_required
 def transactions():
     form = FilterTransactionsForm()
