@@ -24,5 +24,5 @@ class TransactionForm(FlaskForm):
 class FilterTransactionsForm(FlaskForm):
     start_date = DateField('Start Date', format='%Y-%m-%d', validators=[Optional()])
     end_date = DateField('End Date', format='%Y-%m-%d', validators=[Optional()])
-    category = SelectField('Category', choices=[], validators=[Optional()])
+    category = StringField('Category', validators=[Optional()])
     submit = SubmitField('Filter')
