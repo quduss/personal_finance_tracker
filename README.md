@@ -9,3 +9,11 @@ A web-based application to help users manage their personal finances by tracking
 - **Transaction Filtering**: Filter transactions by date, category, and transaction type.
 - **User Authentication**: Register and log in to access personal financial data.
 - **Dashboard**: A simple dashboard to view, filter, and manage transactions.
+
+## Technologies Used
+- **Flask**: Backend framework used to build the web application.
+- **SQLAlchemy**: ORM for handling the SQLite database.
+- **WTForms**: Form handling and validation.
+- **Flask-Login**: User authentication management.
+- **Flask-Migrate**: Database migrations.
+- **SQLite**: Database for storing transactions and user information.
